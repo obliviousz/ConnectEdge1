@@ -1,0 +1,6 @@
+package com.example.connectedge2
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
