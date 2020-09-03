@@ -51,7 +51,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
       databaseMethods.createChatRoom(chatRoomId, chatRoomMap);
       Navigator.push(context, MaterialPageRoute(
-          builder: (context) => ConversationScreen()
+          builder: (context) => ConversationScreen(
+            chatRoomId
+          )
       ));
     } else {
       print("user cannot chat with himself");

@@ -3,6 +3,7 @@ import 'package:connectedge2/screens/chatroomscreen.dart';
 import 'package:flutter/material.dart';
 import 'screens/sign_in.dart';
 import 'helper/authentication.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -16,6 +17,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   bool userIsLoggedIn;
+
+  @override
   void initState(){
     getLoggedInStatus();
     super.initState();
@@ -27,7 +30,6 @@ class _MyAppState extends State<MyApp> {
       });
     });
   }
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner : false,

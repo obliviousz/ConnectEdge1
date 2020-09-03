@@ -88,14 +88,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               userInfoSnapshot.documents[0].data["userName"]);
           HelperFunctions.saveUserEmailSharedPreference(
               userInfoSnapshot.documents[0].data["userEmail"]);*/
+          showAlertDialog(context);
           setState(() {
             isLoading = false;
-            showAlertDialog(context);
           });
         } else {
-          Navigator.pushReplacement(
-
-              context, MaterialPageRoute(builder: (context) => Authentication()));
+          Navigator.pushReplacement(context, MaterialPageRoute(
+              builder: (context) => Authentication()
+          ));
         }
       });
     }
@@ -118,7 +118,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           child: Column(
                             children: [
                               SizedBox(height:100.0),
-                              Text("We'll send a password reset link to you email",
+                              Text("We'll send a password reset link to your email",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15.0,

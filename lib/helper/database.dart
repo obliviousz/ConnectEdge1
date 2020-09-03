@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class DatabaseMethods{
   
@@ -27,5 +26,27 @@ class DatabaseMethods{
         .document(chatroomid).setData(chatRoomMap).catchError((e){
           print(e.toString());
     });
+  }
+
+  addConversationMessages(String chatRoomId, messageMap){
+    Firestore.instance.collection("ChatRoom")
+        .document(chatRoomId)
+        .collection("chats")
+        .add(messageMap).catchError((e) {print(e.toString());});
+  }
+
+  getConversationMessages(String chatRoomId) async {
+    return await Firestore.instance.collection("ChatRoom")
+        .document(chatRoomId)
+        .collection("chats")
+        .orderBy("time", descending: false)
+        .snapshots();
+  }
+
+  getChatRooms(String userName) async {
+    return await Firestore.instance
+        .collection("ChatRoom")
+        .where("users", arrayContains: userName)
+        .snapshots();
   }
 }
