@@ -29,7 +29,7 @@ showAlertDialog(BuildContext context) {
   // Create AlertDialog
   AlertDialog alert = AlertDialog(
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(15.0))
+        borderRadius: BorderRadius.all(Radius.circular(15.0))
     ),
     title: Text("Wrong Email Id or Password",
         style: TextStyle(
@@ -83,7 +83,7 @@ class _SignInState extends State<SignIn> {
 
       // save the user_email of the user
       HelperFunctions.saveUserEmailSharedPreference(
-        emailtexteditingcontroller.text);
+          emailtexteditingcontroller.text);
 
       setState(() {
         isLoading = true;
@@ -91,10 +91,10 @@ class _SignInState extends State<SignIn> {
 
       // to get the data of the user from database by user_email
       await dataService.getUserByUserEmail(emailtexteditingcontroller.text)
-      .then((result) async {
+          .then((result) async {
         userDetails = result;
         HelperFunctions
-          .saveUserNameSharedPreference(userDetails.documents[0].data["name"]);
+            .saveUserNameSharedPreference(userDetails.documents[0].data["name"]);
       });
 
       // to check whether the email and password entered are correct or not
@@ -105,7 +105,7 @@ class _SignInState extends State<SignIn> {
           // authentication successful
           HelperFunctions.saveUserLoggedInSharedPreference(true);
           Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) => ChatRoom()
+              builder: (context) => ChatRoom()
           ));
         } else {
           // authentication failed
@@ -117,95 +117,159 @@ class _SignInState extends State<SignIn> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: appBarMain(context),
-      body: isLoading
-          ? Container(
-        child: Center(child: CircularProgressIndicator()),
-      ): SingleChildScrollView(
-        child: Container(
-          alignment: Alignment.bottomCenter,
-        child :Container(
-            padding: EdgeInsets.symmetric(horizontal:20.0),
-          child: Column(
-          children: [
-            Form(
-              key : formKey,
-              child: Column(
-                children: [
-                  SizedBox(height:160.0),
-                  SizedBox(height:10.0),
-                  TextFormField(
-                    validator: (val){
-                      return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val) ? null : "Enter correct email";
-                    },
-                    controller: emailtexteditingcontroller,
-                    style:TextStyle(
-                      color: Colors.white,
-                    ),
-                    decoration: textfield1(),
-                  ),
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                    validator:  (val){
-                      return val.isEmpty|| val.length < 6 ? "Enter Password 6+ characters" : null;
-                    },
-                    controller: passwordtexteditingcontroller,
-                    style:TextStyle(
-                      color: Colors.white,
-                    ),
-                    decoration: textfield2(),
-                    obscureText: true,
-                  ),
-                  SizedBox(height:10.0),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
-                    },
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        "Forgot Password?",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
-                  SizedBox(
-                    height: 60.0,
-                    width: 200.0,
-                    child :GestureDetector(
-                      onTap: (){
-                        signIn();
-                      },
-                        child: buttons1("Sign In",context),
-                    ),
-                  ),
-                  SizedBox(height:20.0),
-                  SizedBox(
-                    height: 60.0,
-                    width: 200.0,
-                    child: GestureDetector(
-                      onTap: (){
-                            widget.toggle();
-                      },
-                        child: buttons1("Sign Up",context)
-                    ),
-                  ),
-                  SizedBox(height: 10.0),
-                ],
-              ),
+      resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.grey,
+      body: isLoading ?
+        Container(
+          child: Center(child: CircularProgressIndicator()),
+        ) :
+      Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                colors: [
+                  Colors.black87,
+                  Colors.black54,
+                  Colors.black54,
+                ]
             )
-          ],
-        )
-        )
-      )
-      )
+        ),
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: 80,),
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Login", style: TextStyle(color: Colors.white, fontSize: 40),),
+                    SizedBox(height: 10,),
+                    Text("Welcome to ConnectEdge", style: TextStyle(color: Colors.white, fontSize: 18),),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(60), topRight: Radius.circular(60))
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(30),
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 50,),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [BoxShadow(
+                                  color: Color.fromRGBO(128,128,128, .5),
+                                  blurRadius: 20,
+                                  offset: Offset(0, 10)
+                              )]
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
+                                ),
+                                child: TextFormField(
+                                  controller: emailtexteditingcontroller,
+                                  validator: (val){
+                                    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val) ? null : "Enter correct email";
+                                  },
+                                  decoration: InputDecoration(
+                                      hintText: "Email",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
+                                ),
+                                child: TextFormField(
+                                  controller: passwordtexteditingcontroller,
+                                  validator: (val){
+                                    return val.isEmpty || val.length < 6 ? "Enter Password 6+ characters" : null;
+                                  },
+                                  decoration: InputDecoration(
+                                      hintText: "Password",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none
+                                  ),
+                                  obscureText: true,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 30,),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
+                          },
+                          child: Text("Forgot Password?", style: TextStyle(color: Colors.grey),),
+                        ),
+                        SizedBox(height: 30,),
+                        GestureDetector(
+                          onTap: (){
+                            signIn();
+                          },
+                          child: Container(
+                            height: 50,
+                            margin: EdgeInsets.symmetric(horizontal: 50),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.grey[700]
+                            ),
+                            child: Center(
+                              child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        Text("Don't have an account?", style: TextStyle(color: Colors.grey),),
+                        SizedBox(height: 20,),
+                        GestureDetector(
+                          onTap: (){
+                            widget.toggle();
+                          },
+                          child: Container(
+                            height: 50,
+                            margin: EdgeInsets.symmetric(horizontal: 50),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.black
+                            ),
+                            child: Center(
+                              child: Text("Sign Up", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
