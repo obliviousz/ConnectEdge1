@@ -1,8 +1,63 @@
 import 'package:connectedge2/helper/authentication.dart';
+import 'package:connectedge2/helper/database.dart';
+import 'package:connectedge2/helper/helperfunctions.dart';
 import 'package:connectedge2/screens/chatroomscreen.dart';
 import 'package:connectedge2/services/auth.dart';
 import 'package:connectedge2/widgets/widget.dart';
 import 'package:flutter/material.dart';
+
+/*showAlertDialog(BuildContext context) {
+  // Create button
+  Widget okButton =  RaisedButton(
+    child: Text("OK",
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 15.0,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(35.0),
+        side: BorderSide(color: Colors.black)
+    ),
+    color: Colors.black,
+    onPressed: () {
+
+    },
+  );
+  // Create AlertDialog
+  AlertDialog alert = AlertDialog(
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0))
+    ),
+    title: Text("Welcome to ConnectEdge",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+        )
+    ),
+    content: Text("Click OK to login...",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+        )
+    ),
+    backgroundColor: Colors.white,
+    actions: [
+      okButton,
+    ],
+  );
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}*/
+
 class SignUp extends StatefulWidget {
   final Function toggle;
   SignUp(this.toggle);
@@ -10,27 +65,38 @@ class SignUp extends StatefulWidget {
   _SignUpState createState() => _SignUpState();
 }
 class _SignUpState extends State<SignUp> {
+
+
+  bool isValid = false;
+  bool isLoading = false;
+
+  AuthMethods authMethods = new AuthMethods();
+  DatabaseMethods databaseMethods = new DatabaseMethods();
+
+  final formKey = GlobalKey<FormState>();
   TextEditingController usernametexteditingcontroller = new TextEditingController();
   TextEditingController emailtexteditingcontroller = new TextEditingController();
   TextEditingController passwordtexteditingcontroller = new TextEditingController();
-  bool isValid = false;
-  bool isLoading = false;
-  final formKey = GlobalKey<FormState>();
-  AuthMethods authMethods = new AuthMethods();
+
   signMeUP() async{
-      if(formKey.currentState.validate())
-        {
-            setState(() {
-              isLoading = true;
-            });
-        }
-      authMethods.signUpWithEmailPassword(emailtexteditingcontroller.text.trim(), passwordtexteditingcontroller.text).then((val){
-        if(val!=null) {
+      if(formKey.currentState.validate()) {
+
+        Map<String, String> userInfoMap = {
+          "name" : usernametexteditingcontroller.text,
+          "email" : emailtexteditingcontroller.text,
+        };
+
+        setState(() {
+          isLoading = true;
+        });
+
+        authMethods.signUpWithEmailPassword(emailtexteditingcontroller.text, passwordtexteditingcontroller.text).then((val){
+          databaseMethods.uploadUserInfo(userInfoMap);
           Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => Authentication()),
           );
-        }
-      });
+        });
+      }
   }
   @override
   Widget build(BuildContext context) {

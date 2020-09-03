@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "31856374642",
-    "firebase_url": "https://connectedge2.firebaseio.com",
-    "project_id": "connectedge2",
-    "storage_bucket": "connectedge2.appspot.com"
+    "project_number": "282409299397",
+    "firebase_url": "https://connectedge-9c497.firebaseio.com",
+    "project_id": "connectedge-9c497",
+    "storage_bucket": "connectedge-9c497.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:31856374642:android:30d941e51b31160d70a3eb",
+        "mobilesdk_app_id": "1:282409299397:android:092e90732fbe20d180efac",
         "android_client_info": {
           "package_name": "com.example.connectedge2"
         }
       },
       "oauth_client": [
         {
-          "client_id": "31856374642-cu29d5r7l49tf8glhovv240g3n1599o1.apps.googleusercontent.com",
+          "client_id": "282409299397-jpj7mnabppc8a54a4dr68sdtpob1f7cn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCGxu9UxiIxmHQ7SvXGjF1pqwmFRtztfRQ"
+          "current_key": "AIzaSyBOs1PgLFY4AjSo-sNGNElbkHXKuyjYLkk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "31856374642-cu29d5r7l49tf8glhovv240g3n1599o1.apps.googleusercontent.com",
+              "client_id": "282409299397-jpj7mnabppc8a54a4dr68sdtpob1f7cn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

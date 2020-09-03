@@ -1,4 +1,7 @@
 import 'package:connectedge2/helper/authentication.dart';
+import 'package:connectedge2/helper/constants.dart';
+import 'package:connectedge2/helper/helperfunctions.dart';
+import 'package:connectedge2/screens/search.dart';
 import 'package:connectedge2/services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -8,9 +11,17 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
-  AuthMethods authMethods= new AuthMethods();
-
+  AuthMethods authMethods = new AuthMethods();
   @override
+  void initState(){
+    getUserDetail();
+    super.initState();
+  }
+  getUserDetail() async {
+    Constants.myName = await HelperFunctions.getUserNameSharedPreference();
+    setState(() {
+    });
+  }
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
@@ -39,7 +50,15 @@ class _ChatRoomState extends State<ChatRoom> {
                 )
             )
           ],
-        )
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.search),
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => SearchScreen()
+            ));
+          },
+        ),
     );
   }
 }

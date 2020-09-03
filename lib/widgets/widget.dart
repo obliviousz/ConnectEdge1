@@ -4,6 +4,7 @@ import 'package:connectedge2/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 Widget appBarMain(BuildContext context){
     return AppBar(
+      centerTitle: true,
       backgroundColor : Colors.black,
       title: Text('𝕮𝖔𝖓𝖓𝖊𝖈𝖙 𝕰𝖉𝖌𝖊',
           style: TextStyle(
@@ -91,4 +92,17 @@ BoxDecoration margins()
       color: Colors.green,
       ),
     );
+}
+
+TextStyle simpleTextStyle() {
+  return TextStyle(
+    color: Colors.white
+  );
+}
+
+TextStyle mediumTextStyle() {
+  return TextStyle(
+    color: Colors.white,
+    fontSize: 17
+  );
 }
