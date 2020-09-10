@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectedge2/helper/constants.dart';
 import 'package:connectedge2/helper/database.dart';
@@ -17,25 +19,27 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
   TextEditingController messageController = new TextEditingController();
   Stream <QuerySnapshot> chatMessagesStream;
-
+  ScrollController scrollController = new ScrollController();
+  
   Widget chatMessages() {
     return StreamBuilder(
       stream: chatMessagesStream,
       builder: (context, snapshot){
         return snapshot.hasData ? ListView.builder(
+            controller: scrollController,
             itemCount: snapshot.data.documents.length,
             itemBuilder: (context, index){
               return MessageTile(
                   message : snapshot.data.documents[index].data["message"],
-                  sendByMe : snapshot.data.documents[index].data["sendBy"] == Constants.myName);
-            }
+                  sendByMe : snapshot.data.documents[index].data["sendBy"] == Constants.myName
+              );
+            },
         ) : Container(
           color: Colors.white
         );
       },
     );
   }
-
   sendMessage() {
     if(messageController.text.isNotEmpty) {
       Map<String, dynamic> messageMap = {
@@ -49,14 +53,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
       });
     }
   }
-
   @override
   void initState() {
-    /*setState(() {
-      DatabaseMethods().getConversationMessages(widget.chatRoomId).then((value){
-        chatMessagesStream = value;
-      });
-    });*/
     DatabaseMethods().getConversationMessages(widget.chatRoomId).then((val) {
       setState(() {
         chatMessagesStream = val;
@@ -140,6 +138,7 @@ class MessageTile extends StatelessWidget {
 
   final String message;
   final bool sendByMe;
+  ScrollController scrollController = ScrollController();
 
   MessageTile({@required this.message, @required this.sendByMe});
 

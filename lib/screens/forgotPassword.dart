@@ -1,5 +1,4 @@
 import 'package:connectedge2/helper/authentication.dart';
-import 'package:connectedge2/screens/sign_in.dart';
 import 'package:connectedge2/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
