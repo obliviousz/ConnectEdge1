@@ -70,9 +70,13 @@ class _ConversationScreenState extends State<ConversationScreen> {
     return Scaffold(
       appBar: appBarMain(context),
       body: Container(
-        child: Stack(
+        child: Column(
           children: [
-            chatMessages(),
+            Expanded(
+              child: Container(
+                child: chatMessages(),
+              ),
+            ),
             Container(
               alignment: Alignment.bottomCenter,
               child: Container(

@@ -6,10 +6,12 @@ import 'package:connectedge2/services/auth.dart';
 import 'package:connectedge2/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
-/*showAlertDialog(BuildContext context) {
+import 'forgotPassword.dart';
+
+showAlertDialog(BuildContext context) {
   // Create button
   Widget okButton =  RaisedButton(
-    child: Text("OK",
+    child: Text("Login",
       style: TextStyle(
         color: Colors.white,
         fontSize: 15.0,
@@ -17,12 +19,13 @@ import 'package:flutter/material.dart';
       ),
     ),
     shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(35.0),
-        side: BorderSide(color: Colors.black)
+      borderRadius: BorderRadius.circular(25.0),
     ),
-    color: Colors.black,
+    color: Colors.grey[800],
     onPressed: () {
-
+      Navigator.pushReplacement(context, MaterialPageRoute(
+        builder: (context) => Authentication()
+      ));
     },
   );
   // Create AlertDialog
@@ -30,19 +33,33 @@ import 'package:flutter/material.dart';
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15.0))
     ),
-    title: Text("Welcome to ConnectEdge",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
-        )
-    ),
-    content: Text("Click OK to login...",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
-        )
+    title: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("ConnectEdge",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 17.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 4,),
+        Divider(
+          thickness: 1,
+        ),
+        SizedBox(height: 4,),
+        Text("Hey!!! Welcome to ConnectEdge. We hope you will find it useful.",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 17.0,
+            )
+        ),
+      ],
     ),
     backgroundColor: Colors.white,
     actions: [
@@ -56,7 +73,7 @@ import 'package:flutter/material.dart';
       return alert;
     },
   );
-}*/
+}
 
 class SignUp extends StatefulWidget {
   final Function toggle;
@@ -65,7 +82,6 @@ class SignUp extends StatefulWidget {
   _SignUpState createState() => _SignUpState();
 }
 class _SignUpState extends State<SignUp> {
-
 
   bool isValid = false;
   bool isLoading = false;
@@ -92,98 +108,176 @@ class _SignUpState extends State<SignUp> {
 
         authMethods.signUpWithEmailPassword(emailtexteditingcontroller.text, passwordtexteditingcontroller.text).then((val){
           databaseMethods.uploadUserInfo(userInfoMap);
-          Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => Authentication()),
-          );
+          setState(() {
+            // showAlertDialog(context);
+            Navigator.pushReplacement(context, MaterialPageRoute(
+                builder: (context) => Authentication()
+            ));
+          });
         });
       }
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: appBarMain(context),
-        body: isLoading? Center(
-          child: Container(
-            child: CircularProgressIndicator(),
-          ),
-        ) :SingleChildScrollView(
-            child: Container(
-                alignment: Alignment.bottomCenter,
-                child :Container(
-                    padding: EdgeInsets.symmetric(horizontal:20.0),
+      resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.grey,
+      body: isLoading ?
+      Container(
+        child: Center(child: CircularProgressIndicator()),
+      ) :
+      Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                colors: [
+                  Colors.black87,
+                  Colors.black54,
+                  Colors.black87,
+                ]
+            )
+        ),
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: 80,),
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Sign Up", style: TextStyle(color: Colors.white, fontSize: 35),),
+                    SizedBox(height: 10,),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(60), topRight: Radius.circular(60))
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(30),
                     child: Column(
-                      children: [
-                        Form(
-                          key: formKey,
+                      children: <Widget>[
+                        SizedBox(height: 50,),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [BoxShadow(
+                                  color: Color.fromRGBO(128,128,128, .5),
+                                  blurRadius: 20,
+                                  offset: Offset(0, 10)
+                              )]
+                          ),
                           child: Column(
-                            children: [
-                              SizedBox(height:160.0),
-                              TextFormField(
-                                validator: (val){
-                                  return val.isEmpty || val.length<2 ? "Input correct output(3+ characters)" : null;
-                                },
-                                controller: usernametexteditingcontroller,
-                                style:TextStyle(
-                                  color: Colors.white,
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
                                 ),
-                                decoration: textfield(),
-                              ),
-                              SizedBox(height:10.0),
-                              TextFormField(
-                                validator: (val){
-                                  return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val) ? null : "Enter correct email";
-                                },
-                                controller: emailtexteditingcontroller,
-                                style:TextStyle(
-                                  color: Colors.white,
-                                ),
-                                decoration: textfield1(),
-                              ),
-                              SizedBox(height: 10.0),
-                              TextFormField(
-                                validator:  (val){
-                                  return val.isEmpty|| val.length < 6 ? "Enter Password 6+ characters" : null;
-                                },
-                                controller: passwordtexteditingcontroller,
-                                style:TextStyle(
-                                  color: Colors.white,
-                                ),
-                                decoration: textfield2(),
-                                obscureText: true,
-                              ),
-                              SizedBox(height: 40.0),
-                              SizedBox(
-                                height: 60.0,
-                                width: 250.0,
-                                child :GestureDetector(
-                                  onTap: (){
-                                    //if()
-                                    signMeUP();
+                                child: TextFormField(
+                                  controller: usernametexteditingcontroller,
+                                  validator: (val){
+                                    return val.isEmpty || val.length<2 ? "Enter Username(3+ characters)" : null;
                                   },
-                                    child: buttons1("Register",context)
+                                  decoration: InputDecoration(
+                                      hintText: "Username",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none
+                                  ),
                                 ),
                               ),
-                              SizedBox(height:20.0),
-                              SizedBox(
-                                height: 60.0,
-                                width: 400.0,
-                                child: GestureDetector(
-                                  onTap: (){
-                                    widget.toggle();
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
+                                ),
+                                child: TextFormField(
+                                  controller: emailtexteditingcontroller,
+                                  validator: (val){
+                                    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val) ? null : "Enter correct email";
                                   },
-                                    child: buttons1("Have Account? Sign In",context),
+                                  decoration: InputDecoration(
+                                      hintText: "Email",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none
+                                  ),
                                 ),
                               ),
-                              SizedBox(height: 10.0),
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
+                                ),
+                                child: TextFormField(
+                                  controller: passwordtexteditingcontroller,
+                                  validator: (val){
+                                    return val.isEmpty || val.length < 6 ? "Enter Password 6+ characters" : null;
+                                  },
+                                  decoration: InputDecoration(
+                                      hintText: "Password",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none
+                                  ),
+                                  obscureText: true,
+                                ),
+                              ),
                             ],
                           ),
-                        )
+                        ),
+                        SizedBox(height: 40,),
+                        GestureDetector(
+                          onTap: (){
+                            signMeUP();
+                          },
+                          child: Container(
+                            height: 50,
+                            margin: EdgeInsets.symmetric(horizontal: 50),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.grey[700]
+                            ),
+                            child: Center(
+                              child: Text("Register", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 40,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Already have an account? ", style: TextStyle(color: Colors.grey),),
+                            GestureDetector(
+                              onTap: () {
+                                widget.toggle();
+                              },
+                                child: Text("Sign In",
+                                  style: TextStyle(
+                                      color: Colors.grey[700],
+                                      fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline
+                                  ),
+                                )
+                            )
+                          ],
+                        ),
                       ],
-                    )
-                )
-            )
-        )
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

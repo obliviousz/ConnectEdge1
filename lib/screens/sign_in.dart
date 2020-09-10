@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectedge2/helper/database.dart';
 import 'package:connectedge2/helper/helperfunctions.dart';
-import 'package:connectedge2/widgets/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:connectedge2/services/auth.dart';
 import 'chatroomscreen.dart';
@@ -18,10 +17,9 @@ showAlertDialog(BuildContext context) {
       ),
     ),
     shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(35.0),
-        side: BorderSide(color: Colors.black)
+        borderRadius: BorderRadius.circular(25.0),
     ),
-    color: Colors.black,
+    color: Colors.grey[800],
     onPressed: () {
       Navigator.of(context).pop();
     },
@@ -31,19 +29,28 @@ showAlertDialog(BuildContext context) {
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15.0))
     ),
-    title: Text("Wrong Email Id or Password",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
-        )
-    ),
-    content: Text("Enter Correct Email Id or Password",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
-        )
+    title: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Invalid Credentials!!!",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 17.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 3,),
+        Divider(
+          thickness: 1,
+        ),
+        SizedBox(height: 3,),
+        Text("Please click OK to try again.",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 17.0,
+            )
+        ),
+      ],
     ),
     backgroundColor: Colors.white,
     actions: [
@@ -135,7 +142,7 @@ class _SignInState extends State<SignIn> {
                 colors: [
                   Colors.black87,
                   Colors.black54,
-                  Colors.black54,
+                  Colors.black87,
                 ]
             )
         ),
@@ -144,7 +151,7 @@ class _SignInState extends State<SignIn> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: 80,),
+              SizedBox(height: 58,),
               Padding(
                 padding: EdgeInsets.all(20),
                 child: Column(
