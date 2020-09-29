@@ -3,6 +3,7 @@ import 'package:connectedge2/helper/constants.dart';
 import 'package:connectedge2/helper/database.dart';
 import 'package:connectedge2/helper/helperfunctions.dart';
 import 'package:connectedge2/screens/conversation_screen.dart';
+import 'package:connectedge2/screens/profile_page.dart';
 import 'package:connectedge2/screens/search.dart';
 import 'package:connectedge2/services/auth.dart';
 import 'package:connectedge2/widgets/widget.dart';
@@ -72,7 +73,7 @@ class _ChatRoomState extends State<ChatRoom> {
                         margin: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 10.0),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          image:DecorationImage(image: NetworkImage("https://cutewallpaper.org/21/stylish-boys-wallpapers/50-Dps-For-Fb-Stylish-Boy-Cool-Cb-Dpzone-Of-Inam-Jni-.jpg")),
+                          image:DecorationImage(image: NetworkImage("https://genslerzudansdentistry.com/wp-content/uploads/2015/11/anonymous-user.png")),
                         ),
                       ),
                       Text(
@@ -104,7 +105,13 @@ class _ChatRoomState extends State<ChatRoom> {
                       color: Colors.white,
                     ),
                   ),
-                  onTap: null,
+                  onTap: () {
+                    Navigator.push(
+                        context,MaterialPageRoute(
+                      builder: (context)=> ProfilePage(),
+                    )
+                    );
+                  },
                 ),
               ),
               Container(

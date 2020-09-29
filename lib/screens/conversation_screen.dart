@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectedge2/helper/constants.dart';
 import 'package:connectedge2/helper/database.dart';

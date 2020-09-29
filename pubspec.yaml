@@ -24,12 +24,14 @@ dependencies:
   flutter:
     sdk: flutter
 
+  firebase_storage:
   simple_animations: ^1.3.3
   shared_preferences: ^0.5.10
   cloud_firestore: ^0.13.7
   cupertino_icons: ^0.1.3
   firebase_auth: ^0.16.1
   flutter_launcher_icons: ^0.7.5
+  image_picker: ^0.6.7+7
 
 flutter_icons:
   android: "launcher_icon"
